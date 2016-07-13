@@ -89,8 +89,52 @@ public class Collection {
     public void map() {
         Map<String, String> sample = new HashMap<>();
         sample.put("name", "Bill");
+        sample.put("gender", "male");
         System.out.println(sample.get("name"));
 
+        final Users user = new Users("Bill", "male");
+        System.out.println(user.getName());
+
+        traverse(sample);
+
+        Map<String, String> sample1 = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return ~o1.compareTo(o2);
+            }
+        });
+        sample1.put("gender", "male");
+        sample1.put("name", "Bill");
+
+        traverse(sample1);
+
+        sample1.forEach((key, value) -> System.out.println(String.format("{\"key\":\"%s\", \"value\":\"%s\"}", key, value)));
+
+    }
+
+    private void traverse(Map<String, String> sample) {
+        for (String key : sample.keySet()) {
+            final String value = sample.get(key);
+            System.out.println(String.format("{\"key\":\"%s\", \"value\":\"%s\"}", key, value));
+        }
+    }
+
+    static class Users {
+        String name;
+        String gender;
+
+        public Users(String name, String gender) {
+            this.name = name;
+            this.gender = gender;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getGender() {
+            return gender;
+        }
     }
 
 }
